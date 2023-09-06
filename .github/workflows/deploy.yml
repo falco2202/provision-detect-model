@@ -1,7 +1,0 @@
-# name: Build Infrastructure
-
-# on: 
-#   push:
-#     branches: [master]
-
-# jobs:
