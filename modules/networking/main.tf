@@ -17,11 +17,12 @@ resource "aws_subnet" "public_subnets" {
 
 resource "aws_route_table" "public_route_table" {
   vpc_id = aws_vpc.my_vpc.id
+}
 
-  route {
-    cidr_block = "0.0.0.0/0"
-    gateway_id = aws_internet_gateway.internet_gateway.id
-  }
+resource "aws_route" "public_rtb" {
+  route_table_id         = aws_route_table.public_route_table.id
+  destination_cidr_block = "0.0.0.0/0"
+  gateway_id             = aws_internet_gateway.internet_gateway.id
 }
 
 resource "aws_route_table_association" "public_subnets" {
@@ -41,15 +42,15 @@ resource "aws_security_group" "public_security_group" {
 
   ingress {
     from_port   = 0
-    to_port     = 0  
-    protocol    = "-1"   # Allow all protocols
-    cidr_blocks = ["0.0.0.0/0"]  # Allow traffic from all sources
+    to_port     = 0
+    protocol    = "-1"   
+    cidr_blocks = ["0.0.0.0/0"] 
   }
 
   egress {
     from_port = "0"
     to_port   = "0"
     protocol  = "-1"
-    self      = "true"
+    cidr_blocks = ["0.0.0.0/0"] 
   }
 }
