@@ -22,3 +22,8 @@ output "ecs_service" {
   value       = module.ecs.ecs_service
   description = "ECS service"
 }
+
+output "name" {
+  value       = module.ecr.ecr_repository_name
+  description = "ECR"
+}

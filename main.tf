@@ -10,9 +10,14 @@ module "networking" {
   public_subnets_cidr_block = ["10.0.1.0/24", "10.0.2.0/24"]
 }
 
+module "ecr" {
+  source = "./modules/ecr"
+  region = var.region
+}
+
 module "ecs" {
   source              = "./modules/ecs"
-  depends_on          = [module.networking]
+  depends_on          = [module.networking, module.ecr]
   vpc_id              = module.networking.vpc_id
   security_groups_ids = module.networking.security_groups_ids
   public_subnets_ids  = module.networking.public_subnets_id
