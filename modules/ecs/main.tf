@@ -67,11 +67,13 @@ resource "aws_appautoscaling_policy" "ecs_policy" {
   resource_id        = aws_appautoscaling_target.autoscaling_group.resource_id
   scalable_dimension = aws_appautoscaling_target.autoscaling_group.scalable_dimension
   service_namespace  = aws_appautoscaling_target.autoscaling_group.service_namespace
-  cooldown           = 300
-  target_tracking_configuration {
+
+  target_tracking_scaling_policy_configuration {
     predefined_metric_specification {
       predefined_metric_type = "ECSServiceAverageCPUUtilization"
     }
-    target_value = 70
+    target_value       = 70
+    scale_in_cooldown  = 300
+    scale_out_cooldown = 300
   }
 }
