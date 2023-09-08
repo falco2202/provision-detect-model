@@ -25,3 +25,9 @@ resource "aws_alb_target_group" "alb_target_group" {
   }
   depends_on = [aws_lb.app_lb]
 }
+
+resource "aws_alb_listener" "alb_listener" {
+  load_balancer_arn = aws_lb.app_lb.id
+  port              = 80
+  protocol          = "HTTP"
+}
