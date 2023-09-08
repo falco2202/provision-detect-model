@@ -62,11 +62,10 @@ resource "aws_autoscaling_group" "autoscaling_group" {
 }
 
 resource "aws_autoscaling_policy" "ecs_policy" {
-  name               = "cpu-autoscaling"
-  policy_type        = "TargetTrackingScaling"
-  resource_id        = aws_autoscaling_group.autoscaling_group.resource_id
-  scalable_dimension = aws_autoscaling_target.autoscaling_group.scalable_dimension
-  service_namespace  = aws_autoscaling_group.autoscaling_group.service_namespace
+  name                   = "cpu-autoscaling"
+  policy_type            = "TargetTrackingScaling"
+  autoscaling_group_name = aws_autoscaling_group.autoscaling_group.name
+  cooldown               = 300
 
   target_tracking_configuration {
     predefined_metric_specification {
