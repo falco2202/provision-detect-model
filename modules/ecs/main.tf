@@ -54,8 +54,8 @@ resource "aws_ecs_service" "fastapp" {
 }
 
 resource "aws_appautoscaling_target" "autoscaling_group" {
-  max_size           = 5
-  min_size           = 1
+  max_capacity       = 5
+  min_capacity       = 1
   resource_id        = "service/${aws_ecs_cluster.cluster.name}/${aws_ecs_service.fastapp[0].name}"
   scalable_dimension = "ecs:service:DesiredCount"
   service_namespace  = "ecs"
