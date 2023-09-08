@@ -43,6 +43,7 @@ resource "aws_ecs_service" "fastapp" {
   load_balancer {
     target_group_arn = var.target_group_arn
     container_port   = 80
+    container_name   = "fastapp-container"
   }
 
   network_configuration {
