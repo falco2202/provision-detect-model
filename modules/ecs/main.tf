@@ -34,7 +34,7 @@ resource "aws_ecs_service" "fastapp" {
   launch_type         = "FARGATE"
   cluster             = aws_ecs_cluster.cluster.id
   task_definition     = aws_ecs_task_definition.task_definition.arn
-  desired_count       = 2
+  desired_count       = 1
   scheduling_strategy = "REPLICA"
 
   depends_on = [aws_ecs_task_definition.task_definition]
@@ -53,3 +53,25 @@ resource "aws_ecs_service" "fastapp" {
   }
 }
 
+resource "aws_autoscaling_group" "autoscaling_group" {
+  max_size           = 5
+  min_size           = 1
+  resource_id        = "service/${aws_ecs_cluster.cluster.name}/${aws_ecs_service.fastapp.name}"
+  scalable_dimension = "ecs:service:DesiredCount"
+  service_namespace  = "ecs"
+}
+
+resource "aws_autoscaling_policy" "ecs_policy" {
+  name               = "cpu-autoscaling"
+  policy_type        = "TargetTrackingScaling"
+  resource_id        = aws_autoscaling_group.autoscaling_group.resource_id
+  scalable_dimension = aws_autoscaling_target.autoscaling_group.scalable_dimension
+  service_namespace  = aws_autoscaling_group.autoscaling_group.service_namespace
+
+  target_tracking_configuration {
+    predefined_metric_specification {
+      predefined_metric_type = "ECSServiceAverageCPUUtilization"
+    }
+    target_value = 70
+  }
+}
