@@ -7,12 +7,12 @@ resource "aws_lb" "app_lb" {
   subnets            = element(var.public_subnets_ids, count.index)
 }
 
-resource "aws_alb_target_group" "alb_target_group" {
+resource "aws_lb_target_group" "alb_target_group" {
   name        = "app-target-group"
   port        = 80
   protocol    = "HTTP"
   vpc_id      = var.vpc_id
-  target_type = "instance"
+  target_type = "ip"
 
   health_check {
     healthy_threshold   = "3"
