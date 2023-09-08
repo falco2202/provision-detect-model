@@ -32,6 +32,6 @@ output "target_group_arn" {
   value = module.alb.target_group_arn
 }
 
-output "app_lb" {
-  value = module.alb.app_lb
+output "dns_app_lb" {
+  value = module.alb.app_lb.dns_name
 }
