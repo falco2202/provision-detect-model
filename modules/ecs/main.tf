@@ -52,3 +52,4 @@ resource "aws_ecs_service" "fastapp" {
     assign_public_ip = true
   }
 }
+
