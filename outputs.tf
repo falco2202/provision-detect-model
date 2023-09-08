@@ -31,3 +31,7 @@ output "name" {
 output "target_group_arn" {
   value = module.alb.target_group_arn
 }
+
+output "app_lb" {
+  value = module.alb.app_lb
+}
