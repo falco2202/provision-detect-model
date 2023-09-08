@@ -40,6 +40,11 @@ resource "aws_ecs_service" "fastapp" {
   depends_on = [aws_ecs_task_definition.task_definition]
   count      = length(var.public_subnets_ids)
 
+  load_balancer {
+    target_group_arn = var.target_group_arn
+    container_port   = 80
+  }
+
   network_configuration {
     subnets          = element(var.public_subnets_ids, count.index)
     security_groups  = var.security_groups_ids
