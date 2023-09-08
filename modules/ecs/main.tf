@@ -34,7 +34,7 @@ resource "aws_ecs_service" "fastapp" {
   launch_type         = "FARGATE"
   cluster             = aws_ecs_cluster.cluster.id
   task_definition     = aws_ecs_task_definition.task_definition.arn
-  desired_count       = 1
+  desired_count       = 2
   scheduling_strategy = "REPLICA"
 
   depends_on = [aws_ecs_task_definition.task_definition]

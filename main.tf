@@ -15,10 +15,18 @@ module "ecr" {
   region = var.region
 }
 
+module "alb" {
+  source              = "./modules/alb"
+  vpc_id              = module.networking.vpc_id
+  security_groups_ids = module.networking.security_groups_ids
+  public_subnets_ids  = module.networking.public_subnets_id
+}
+
 module "ecs" {
   source              = "./modules/ecs"
   depends_on          = [module.networking, module.ecr]
   vpc_id              = module.networking.vpc_id
   security_groups_ids = module.networking.security_groups_ids
   public_subnets_ids  = module.networking.public_subnets_id
+  target_group_arn    = module.alb.target_group_arn
 }
