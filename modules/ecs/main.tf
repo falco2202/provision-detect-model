@@ -10,8 +10,8 @@ resource "aws_ecs_cluster" "cluster" {
 resource "aws_ecs_task_definition" "task_definition" {
   family             = "detect-fargate-tf"
   network_mode       = "awsvpc"
-  cpu                = "512"
-  memory             = "1024"
+  cpu                = "1024"
+  memory             = "2048"
   execution_role_arn = "arn:aws:iam::762317700000:role/ecsTaskExecutionRole"
 
   container_definitions = jsonencode([
@@ -54,7 +54,7 @@ resource "aws_ecs_service" "fastapp" {
 }
 
 resource "aws_appautoscaling_target" "autoscaling_group" {
-  max_capacity       = 5
+  max_capacity       = 10
   min_capacity       = 1
   resource_id        = "service/${aws_ecs_cluster.cluster.name}/${aws_ecs_service.fastapp[0].name}"
   scalable_dimension = "ecs:service:DesiredCount"
@@ -73,7 +73,7 @@ resource "aws_appautoscaling_policy" "ecs_policy" {
       predefined_metric_type = "ECSServiceAverageCPUUtilization"
     }
     target_value       = 70
-    scale_in_cooldown  = 300
-    scale_out_cooldown = 300
+    scale_in_cooldown  = 500
+    scale_out_cooldown = 500
   }
 }
