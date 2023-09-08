@@ -23,4 +23,5 @@ resource "aws_alb_target_group" "alb_target_group" {
     path                = "/"
     unhealthy_threshold = "2"
   }
+  depends_on = [aws_lb.app_lb]
 }
