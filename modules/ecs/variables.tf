@@ -10,3 +10,7 @@ variable "security_groups_ids" {
 variable "public_subnets_ids" {
   description = "Subnets"
 }
+
+variable "target_group_arn" {
+  description = "Target group"
+}
