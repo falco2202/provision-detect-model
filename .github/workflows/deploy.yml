@@ -4,6 +4,7 @@ on:
   push:
     path: "!.md"
     branches: [master]
+  workflow_dispatch:
 
 jobs:
   plan:
