@@ -10,7 +10,7 @@ locals {
 
 
 module "networking" {
-  source                    = "../modules/networking"
+  source                    = "../../modules/networking"
   name                      = "VPC"
   availability_zones        = var.availability_zones
   vpc_cidr_block            = var.vpc_cidr_block
