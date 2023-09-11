@@ -25,15 +25,6 @@ resource "aws_ecs_task_definition" "task_definition" {
           hostPort      = var.app_service.host_port
         }
       ]
-
-      logConfiguration = {
-        logDriver = "awslogs"
-        options = {
-          awslogs-group         = "${var.app_service["name"]}-logs"
-          awslogs-region        = var.region
-          awslogs-stream-prefix = var.app_name
-        }
-      }
     }
   ])
 }
