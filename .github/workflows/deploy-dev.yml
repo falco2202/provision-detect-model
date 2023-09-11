@@ -35,6 +35,7 @@ jobs:
         run: terraform plan -var-file="terraform.tfvars"
 
   apply:
+    needs: plan
     name: Apply Infrastructure
     runs-on: ubuntu-latest
     steps:
