@@ -39,7 +39,6 @@ resource "aws_ecs_task_definition" "task_definition" {
 }
 
 resource "aws_ecs_service" "fastapp" {
-  for_each            = var.var.app_service
   name                = "${var.app_service.name}-service"
   launch_type         = "FARGATE"
   cluster             = aws_ecs_cluster.cluster.id
