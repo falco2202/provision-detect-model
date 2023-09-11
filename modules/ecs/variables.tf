@@ -37,12 +37,12 @@ variable "env" {
 
 variable "app_service" {
   type = object({
-    name          = string
-    hostPort      = number
-    containerPort = number
-    cpu           = number
-    memory        = number
-    desired_count = number
+    name           = string
+    host_port      = number
+    container_port = number
+    cpu            = number
+    memory         = number
+    desired_count  = number
 
     autoscaling = object({
       max_capacity = number
