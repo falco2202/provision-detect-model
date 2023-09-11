@@ -1,5 +1,5 @@
 resource "aws_ecs_cluster" "cluster" {
-  name = "TerraformCluster"
+  name = "terraform-cluster-${var.env}"
 
   setting {
     name  = "containerInsights"
@@ -8,33 +8,44 @@ resource "aws_ecs_cluster" "cluster" {
 }
 
 resource "aws_ecs_task_definition" "task_definition" {
-  family             = "detect-fargate-tf"
+  for_each           = var.app_service
+  family             = "${var.app_name}-tf"
   network_mode       = "awsvpc"
-  cpu                = "1024"
-  memory             = "2048"
-  execution_role_arn = "arn:aws:iam::762317700000:role/ecsTaskExecutionRole"
+  cpu                = each.value.cpu
+  memory             = each.value.memory
+  execution_role_arn = var.ecs_task_execution_role_arn
 
   container_definitions = jsonencode([
     {
-      name      = "detect-first"
-      image     = "762317700000.dkr.ecr.ap-southeast-1.amazonaws.com/fastapp:latest"
+      name      = each.value.name
+      image     = "${var.account_id}.dkr.ecr.${var.region}.amazonaws.com/${var.app_name}:latest"
       essential = true
       portMappings = [
         {
-          containerPort = 80
-          hostPort      = 80
+          containerPort = each.value.container_port
+          hostPort      = each.value.host_port
         }
       ]
+
+      logConfiguration = {
+        logDriver = "awslogs"
+        options = {
+          awslogs-group         = "${each.value["name"]}-logs"
+          awslogs-region        = var.region
+          awslogs-stream-prefix = var.app_name
+        }
+      }
     }
   ])
 }
 
 resource "aws_ecs_service" "fastapp" {
-  name                = "fastapp"
+  for_each            = var.app_service
+  name                = "${each.value.name}-service"
   launch_type         = "FARGATE"
   cluster             = aws_ecs_cluster.cluster.id
-  task_definition     = aws_ecs_task_definition.task_definition.arn
-  desired_count       = 1
+  task_definition     = aws_ecs_task_definition.task_definition[each.key].arn
+  desired_count       = each.value.desired_count
   scheduling_strategy = "REPLICA"
 
   depends_on = [aws_ecs_task_definition.task_definition]
@@ -42,8 +53,8 @@ resource "aws_ecs_service" "fastapp" {
 
   load_balancer {
     target_group_arn = var.target_group_arn
-    container_port   = 80
-    container_name   = "detect-first"
+    container_port   = each.value.container_port
+    container_name   = each.value.name
   }
 
   network_configuration {
@@ -54,15 +65,17 @@ resource "aws_ecs_service" "fastapp" {
 }
 
 resource "aws_appautoscaling_target" "autoscaling_group" {
-  max_capacity       = 5
-  min_capacity       = 1
-  resource_id        = "service/${aws_ecs_cluster.cluster.name}/${aws_ecs_service.fastapp[0].name}"
+  for_each           = var.app_service
+  max_capacity       = each.value.autoscaling.max_capacity
+  min_capacity       = each.value.autoscaling.min_capacity
+  resource_id        = "service/${aws_ecs_cluster.cluster.name}/${aws_ecs_service.fastapp[each.key].name}"
   scalable_dimension = "ecs:service:DesiredCount"
   service_namespace  = "ecs"
 }
 
 resource "aws_appautoscaling_policy" "ecs_policy" {
-  name               = "cpu-autoscaling"
+  for_each           = var.app_service
+  name               = "${var.app_name}-cpu-autoscaling"
   policy_type        = "TargetTrackingScaling"
   resource_id        = aws_appautoscaling_target.autoscaling_group.resource_id
   scalable_dimension = aws_appautoscaling_target.autoscaling_group.scalable_dimension
@@ -72,8 +85,6 @@ resource "aws_appautoscaling_policy" "ecs_policy" {
     predefined_metric_specification {
       predefined_metric_type = "ECSServiceAverageCPUUtilization"
     }
-    target_value       = 70
-    scale_in_cooldown  = 200
-    scale_out_cooldown = 200
+    target_value = each.value.autoscaling.cpu.target_value
   }
 }

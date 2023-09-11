@@ -1,11 +1,27 @@
 ### Common configurations
 region   = "ap-southeast-1"
-app_name = "detect-ecs"
+app_name = "fastapp"
 env      = "dev"
 
 ### VPC configurations
-cidr               = "10.0.0.0/16"
-availability_zones = ["ap-southeast-1a", "ap-southeast-1b"]
-public_subnets     = ["10.10.1.0/24", "10.10.2.0/24"]
+vpc_cidr_block            = "10.0.0.0/16"
+availability_zones        = ["ap-southeast-1a", "ap-southeast-1b"]
+public_subnets_cidr_block = ["10.10.1.0/24", "10.10.2.0/24"]
 
-### ALB configurations
+### Service configurations
+app_service = {
+  name          = "detect-app"
+  hostPort      = 80
+  containerPort = 80
+  cpu           = 512
+  memory        = 1024
+  desired_count = 1
+
+  autoscaling = {
+    max_capacity = 3
+    min_capacity = 1
+    cpu = {
+      target_value = 70
+    }
+  }
+}
