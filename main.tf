@@ -28,6 +28,7 @@ module "alb" {
   security_groups_ids = module.networking.security_groups_ids
   public_subnets_ids  = module.networking.public_subnets_id
   app_name            = var.app_name
+  env                 = var.env
 }
 
 module "ecs" {

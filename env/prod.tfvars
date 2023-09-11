@@ -1,7 +1,7 @@
 ### Common configurations
 region   = "ap-southeast-1"
 app_name = "fastapp"
-env      = "dev"
+env      = "production"
 
 ### VPC configurations
 vpc_cidr_block            = "10.0.0.0/16"
