@@ -11,7 +11,7 @@ module "iam" {
 
 module "networking" {
   source                    = "./modules/networking"
-  app_name                  = var.app_name
+  name                      = "VPC"
   env                       = var.env
   availability_zones        = var.availability_zones
   vpc_cidr_block            = var.vpc_cidr_block
