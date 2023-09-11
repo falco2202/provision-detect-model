@@ -10,26 +10,26 @@ resource "aws_ecs_cluster" "cluster" {
 resource "aws_ecs_task_definition" "task_definition" {
   family             = "${var.app_name}-tf"
   network_mode       = "awsvpc"
-  cpu                = app_service.cpu
-  memory             = app_service.memory
+  cpu                = var.app_service.cpu
+  memory             = var.app_service.memory
   execution_role_arn = var.ecs_task_execution_role_arn
 
   container_definitions = jsonencode([
     {
-      name      = app_service.name
+      name      = var.app_service.name
       image     = "${var.account_id}.dkr.ecr.${var.region}.amazonaws.com/${var.app_name}:latest"
       essential = true
       portMappings = [
         {
-          containerPort = app_service.container_port
-          hostPort      = app_service.host_port
+          containerPort = var.app_service.container_port
+          hostPort      = var.app_service.host_port
         }
       ]
 
       logConfiguration = {
         logDriver = "awslogs"
         options = {
-          awslogs-group         = "${app_service["name"]}-logs"
+          awslogs-group         = "${var.app_service["name"]}-logs"
           awslogs-region        = var.region
           awslogs-stream-prefix = var.app_name
         }
@@ -39,20 +39,20 @@ resource "aws_ecs_task_definition" "task_definition" {
 }
 
 resource "aws_ecs_service" "fastapp" {
-  for_each            = var.app_service
-  name                = "${app_service.name}-service"
+  for_each            = var.var.app_service
+  name                = "${var.app_service.name}-service"
   launch_type         = "FARGATE"
   cluster             = aws_ecs_cluster.cluster.id
   task_definition     = aws_ecs_task_definition.task_definition.arn
-  desired_count       = app_service.desired_count
+  desired_count       = var.app_service.desired_count
   scheduling_strategy = "REPLICA"
 
   depends_on = [aws_ecs_task_definition.task_definition]
 
   load_balancer {
     target_group_arn = var.target_group_arn
-    container_port   = app_service.container_port
-    container_name   = app_service.name
+    container_port   = var.app_service.container_port
+    container_name   = var.app_service.name
   }
 
   network_configuration {
@@ -63,8 +63,8 @@ resource "aws_ecs_service" "fastapp" {
 }
 
 resource "aws_appautoscaling_target" "autoscaling_group" {
-  max_capacity       = app_service.autoscaling.max_capacity
-  min_capacity       = app_service.autoscaling.min_capacity
+  max_capacity       = var.app_service.autoscaling.max_capacity
+  min_capacity       = var.app_service.autoscaling.min_capacity
   resource_id        = "service/${aws_ecs_cluster.cluster.name}/${aws_ecs_service.fastapp.name}"
   scalable_dimension = "ecs:service:DesiredCount"
   service_namespace  = "ecs"
@@ -81,6 +81,6 @@ resource "aws_appautoscaling_policy" "ecs_policy" {
     predefined_metric_specification {
       predefined_metric_type = "ECSServiceAverageCPUUtilization"
     }
-    target_value = app_service.autoscaling.cpu.target_value
+    target_value = var.app_service.autoscaling.cpu.target_value
   }
 }

@@ -1,4 +1,4 @@
-name: Build ECS and create cluster service
+name: Build ECS and create cluster service - Dev environment
 
 on:
   push:
