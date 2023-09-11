@@ -2,8 +2,9 @@ name: Build ECS and create cluster service
 
 on: 
   push:
-    path: "!.md"
     branches: [master]
+    paths-ignore:
+      - "**.md"
   workflow_dispatch:
 
 jobs:
