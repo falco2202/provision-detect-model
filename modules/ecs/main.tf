@@ -57,7 +57,7 @@ resource "aws_ecs_service" "fastapp" {
   }
 
   network_configuration {
-    subnets          = var.public_subnets_id
+    subnets          = var.public_subnets_ids
     security_groups  = var.security_groups_ids
     assign_public_ip = true
   }
