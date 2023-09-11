@@ -14,3 +14,7 @@ variable "public_subnets_ids" {
 variable "app_name" {
   type = string
 }
+
+variable "env" {
+  type = string
+}
