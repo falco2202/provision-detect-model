@@ -29,7 +29,7 @@ variable "public_subnets_cidr_block" {
 
 ### Service variables
 variable "app_service" {
-  type = map(object({
+  type = object({
     name          = string
     hostPort      = number
     containerPort = number
@@ -44,5 +44,5 @@ variable "app_service" {
         target_value = number
       })
     })
-  }))
+  })
 }
