@@ -36,7 +36,7 @@ variable "env" {
 }
 
 variable "app_service" {
-  type = map(object({
+  type = object({
     name          = string
     hostPort      = number
     containerPort = number
@@ -51,5 +51,5 @@ variable "app_service" {
         target_value = number
       })
     })
-  }))
+  })
 }
