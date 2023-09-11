@@ -15,10 +15,6 @@ variable "target_group_arn" {
   description = "Target group"
 }
 
-variable "ecs_task_execution_role_arn" {
-  type = string
-}
-
 variable "region" {
   type = string
 }
