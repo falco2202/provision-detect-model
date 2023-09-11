@@ -27,6 +27,14 @@ variable "app_name" {
   type = string
 }
 
+variable "account_id" {
+  type = number
+}
+
+variable "env" {
+  type = string
+}
+
 variable "app_service" {
   type = map(object({
     name          = string

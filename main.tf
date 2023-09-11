@@ -35,6 +35,7 @@ module "ecs" {
   account_id                  = local.account_id
   app_name                    = var.app_name
   region                      = var.region
+  app_service                 = var.app_service
   env                         = var.env
   ecs_task_execution_role_arn = module.iam.ecs_task_execution_role_arn
   vpc_id                      = module.networking.vpc_id
