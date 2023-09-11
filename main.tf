@@ -17,11 +17,6 @@ module "networking" {
   public_subnets_cidr_block = var.public_subnets_cidr_block
 }
 
-module "ecr" {
-  source = "./modules/ecr"
-  region = var.region
-}
-
 module "alb" {
   source              = "./modules/alb"
   vpc_id              = module.networking.vpc_id
@@ -33,7 +28,7 @@ module "alb" {
 
 module "ecs" {
   source                      = "./modules/ecs"
-  depends_on                  = [module.networking, module.ecr]
+  depends_on                  = [module.networking]
   account_id                  = local.account_id
   app_name                    = var.app_name
   region                      = var.region
