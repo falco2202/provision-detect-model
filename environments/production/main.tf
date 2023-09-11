@@ -10,7 +10,7 @@ locals {
 
 
 module "networking" {
-  source                    = "./modules/networking"
+  source                    = "../modules/networking"
   name                      = "VPC"
   availability_zones        = var.availability_zones
   vpc_cidr_block            = var.vpc_cidr_block
@@ -18,7 +18,7 @@ module "networking" {
 }
 
 module "alb" {
-  source              = "./modules/alb"
+  source              = "../../modules/alb"
   vpc_id              = module.networking.vpc_id
   security_groups_ids = module.networking.security_groups_ids
   public_subnets_ids  = [module.networking.public_subnets_id]
@@ -27,7 +27,7 @@ module "alb" {
 }
 
 module "ecs" {
-  source              = "./modules/ecs"
+  source              = "../../modules/ecs"
   depends_on          = [module.networking]
   account_id          = local.account_id
   app_name            = var.app_name
