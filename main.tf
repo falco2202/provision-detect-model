@@ -4,11 +4,6 @@ provider "aws" {
 
 data "aws_caller_identity" "current" {}
 
-module "iam" {
-  source   = "./modules/iam"
-  app_name = var.app_name
-}
-
 module "networking" {
   source                    = "./modules/networking"
   name                      = "VPC"
