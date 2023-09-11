@@ -49,7 +49,6 @@ resource "aws_ecs_service" "fastapp" {
   scheduling_strategy = "REPLICA"
 
   depends_on = [aws_ecs_task_definition.task_definition]
-  count      = length(var.public_subnets_ids)
 
   load_balancer {
     target_group_arn = var.target_group_arn
@@ -58,7 +57,7 @@ resource "aws_ecs_service" "fastapp" {
   }
 
   network_configuration {
-    subnets          = element(var.public_subnets_ids, count.index)
+    subnets          = var.public_subnets_id
     security_groups  = var.security_groups_ids
     assign_public_ip = true
   }
