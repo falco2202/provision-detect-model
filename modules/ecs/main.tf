@@ -76,9 +76,9 @@ resource "aws_appautoscaling_policy" "ecs_policy" {
   for_each           = var.app_service
   name               = "${var.app_name}-cpu-autoscaling"
   policy_type        = "TargetTrackingScaling"
-  resource_id        = aws_appautoscaling_target.autoscaling_group.resource_id
-  scalable_dimension = aws_appautoscaling_target.autoscaling_group.scalable_dimension
-  service_namespace  = aws_appautoscaling_target.autoscaling_group.service_namespace
+  resource_id        = aws_appautoscaling_target.autoscaling_group[each.key].resource_id
+  scalable_dimension = aws_appautoscaling_target.autoscaling_group[each.key].scalable_dimension
+  service_namespace  = aws_appautoscaling_target.autoscaling_group[each.key].service_namespace
 
   target_tracking_scaling_policy_configuration {
     predefined_metric_specification {
