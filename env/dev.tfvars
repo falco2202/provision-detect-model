@@ -10,18 +10,20 @@ public_subnets_cidr_block = ["10.10.1.0/24", "10.10.2.0/24"]
 
 ### Service configurations
 app_service = {
-  name          = "detect-app"
-  hostPort      = 80
-  containerPort = 80
-  cpu           = 512
-  memory        = 1024
-  desired_count = 1
+  "DetectApp" = {
+    name          = "detect-app"
+    hostPort      = 80
+    containerPort = 80
+    cpu           = 512
+    memory        = 1024
+    desired_count = 1
 
-  autoscaling = {
-    max_capacity = 3
-    min_capacity = 1
-    cpu = {
-      target_value = 70
+    autoscaling = {
+      max_capacity = 3
+      min_capacity = 1
+      cpu = {
+        target_value = 70
+      }
     }
   }
 }
