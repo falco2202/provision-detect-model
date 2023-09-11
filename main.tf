@@ -34,6 +34,9 @@ module "ecs" {
   source                      = "./modules/ecs"
   depends_on                  = [module.networking, module.ecr]
   account_id                  = local.account_id
+  app_name                    = var.app_name
+  region                      = var.region
+  env                         = var.env
   ecs_task_execution_role_arn = module.iam.ecs_task_execution_role_arn
   vpc_id                      = module.networking.vpc_id
   security_groups_ids         = module.networking.security_groups_ids
