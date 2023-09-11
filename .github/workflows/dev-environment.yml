@@ -1,8 +1,8 @@
-name: Build ECS and create cluster service - Production environment
+name: Build ECS and create cluster service - Dev environment
 
 on:
   push:
-    branches: [master]
+    branches: [dev]
     paths-ignore:
       - "**.md"
   workflow_dispatch:
@@ -29,4 +29,4 @@ jobs:
         run: terraform plan -var-file="env/dev.tfvars"
 
       - name: Terraform apply
-        run: terraform apply -var-file="env/prod.tfvars" -auto-approve
+        run: terraform apply -var-file="env/dev.tfvars" -auto-approve

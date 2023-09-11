@@ -23,11 +23,6 @@ output "ecs_service" {
   description = "ECS service"
 }
 
-output "name" {
-  value       = module.ecr.ecr_repository_name
-  description = "ECR"
-}
-
 output "target_group_arn" {
   value = module.alb.target_group_arn
 }

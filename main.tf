@@ -2,29 +2,33 @@ provider "aws" {
   region = var.region
 }
 
+data "aws_caller_identity" "current" {}
+
 module "networking" {
   source                    = "./modules/networking"
   name                      = "VPC"
   availability_zones        = var.availability_zones
-  vpc_cidr_block            = "10.0.0.0/16"
-  public_subnets_cidr_block = ["10.0.1.0/24", "10.0.2.0/24"]
-}
-
-module "ecr" {
-  source = "./modules/ecr"
-  region = var.region
+  vpc_cidr_block            = var.vpc_cidr_block
+  public_subnets_cidr_block = var.public_subnets_cidr_block
 }
 
 module "alb" {
   source              = "./modules/alb"
   vpc_id              = module.networking.vpc_id
   security_groups_ids = module.networking.security_groups_ids
-  public_subnets_ids  = module.networking.public_subnets_id
+  public_subnets_ids  = [module.networking.public_subnets_id]
+  app_name            = var.app_name
+  env                 = var.env
 }
 
 module "ecs" {
   source              = "./modules/ecs"
-  depends_on          = [module.networking, module.ecr]
+  depends_on          = [module.networking]
+  account_id          = local.account_id
+  app_name            = var.app_name
+  region              = var.region
+  app_service         = var.app_service
+  env                 = var.env
   vpc_id              = module.networking.vpc_id
   security_groups_ids = module.networking.security_groups_ids
   public_subnets_ids  = module.networking.public_subnets_id
