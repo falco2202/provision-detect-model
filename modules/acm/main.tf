@@ -8,15 +8,10 @@ resource "aws_acm_certificate" "falcodev_cert" {
 }
 
 resource "aws_route53_record" "falcodev" {
-  name    = "_acm-validation.falcodev.online"
+  name    = aws_acm_certificate.falcodev_cert.domain_validation_options[0].resource_record_name
   type    = "CNAME"
   zone_id = var.zone_id
 
-  records = ["api-dev.falcodev.online"]
-  ttl     = 60
-}
-
-resource "aws_acm_certificate_validation" "falcodev_cert" {
-  certificate_arn         = aws_acm_certificate.falcodev_cert.arn
-  validation_record_fqdns = [aws_route53_record.falcodev.fqdn]
+  records = [aws_acm_certificate.falcodev_cert.domain_validation_options[0].resource_record_value]
+  ttl     = 300
 }
