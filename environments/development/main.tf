@@ -36,7 +36,6 @@ module "route53" {
   source        = "../../modules/route53"
   app_lb        = module.alb.app_lb
   host_zone_id  = var.host_zone_id
-  host_zone     = var.host_zone
   record_domain = var.record_domain
 }
 
