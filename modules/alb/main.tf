@@ -20,6 +20,10 @@ resource "aws_alb_target_group" "alb_target_group" {
   }
 
   depends_on = [aws_lb.app_lb]
+
+  lifecycle {
+    create_before_destroy = true
+  }
 }
 
 resource "aws_alb_listener" "alb_listener" {
