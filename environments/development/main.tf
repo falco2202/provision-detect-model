@@ -16,6 +16,11 @@ module "networking" {
   public_subnets_cidr_block = var.public_subnets_cidr_block
 }
 
+module "acm" {
+  source  = "../../modules/acm"
+  zone_id = module.route53.zone_id
+}
+
 module "alb" {
   source              = "../../modules/alb"
   vpc_id              = module.networking.vpc_id
@@ -23,6 +28,7 @@ module "alb" {
   public_subnets_ids  = [module.networking.public_subnets_id]
   app_name            = var.app_name
   env                 = var.env
+  certificate_arn     = module.acm.certificate_arn
 }
 
 module "route53" {

@@ -9,13 +9,13 @@ resource "aws_lb" "app_lb" {
 
 resource "aws_alb_target_group" "alb_target_group" {
   name        = "${var.app_name}-${var.env}-tg"
-  port        = 80
-  protocol    = "HTTP"
+  port        = 443
+  protocol    = "HTTPS"
   vpc_id      = var.vpc_id
   target_type = "ip"
 
   health_check {
-    protocol = "HTTP"
+    protocol = "HTTPS"
     path     = "/"
   }
 
@@ -24,8 +24,10 @@ resource "aws_alb_target_group" "alb_target_group" {
 
 resource "aws_alb_listener" "alb_listener" {
   load_balancer_arn = aws_lb.app_lb[0].id
-  port              = 80
-  protocol          = "HTTP"
+  port              = 443
+  protocol          = "HTTPS"
+
+  certificate_arn = var.certificate_arn
 
   default_action {
     type             = "forward"

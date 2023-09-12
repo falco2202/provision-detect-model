@@ -18,3 +18,7 @@ variable "app_name" {
 variable "env" {
   type = string
 }
+
+variable "certificate_arn" {
+  type = string
+}
