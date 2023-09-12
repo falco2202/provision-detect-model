@@ -8,8 +8,7 @@ resource "aws_route53_record" "alias_falcodev" {
   type    = "A"
 
   alias {
-    name                   = var.aws_lb.dns_name
-    zone_id                = var.aws_lb.zone_id
+    name                   = var.app_lb.dns_name
     evaluate_target_health = true
   }
 }

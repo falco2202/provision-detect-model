@@ -27,7 +27,7 @@ module "alb" {
 
 module "route53" {
   source = "../../modules/route53"
-  aws_lb = module.alb.app_lb
+  app_lb = module.alb.app_lb
 }
 
 module "ecs" {
