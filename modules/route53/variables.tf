@@ -1,3 +1,3 @@
 variable "aws_lb" {
-  type = string
+  default = "Application load balancer"
 }
