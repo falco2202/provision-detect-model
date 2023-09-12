@@ -36,5 +36,6 @@ output "reoute53_record" {
 }
 
 output "certificate" {
-  value = module.acm.certificate
+  value     = module.acm.certificate
+  sensitive = true
 }
