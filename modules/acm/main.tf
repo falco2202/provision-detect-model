@@ -12,7 +12,7 @@ resource "aws_route53_record" "falcodev" {
   type    = "CNAME"
   zone_id = var.zone_id
 
-  records = [aws_acm_certificate.falcodev_cert.domain_validation_options[0].resource_record_name]
+  records = ["api-dev.falcodev.online"]
   ttl     = 60
 }
 
