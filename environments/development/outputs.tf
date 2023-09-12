@@ -34,3 +34,7 @@ output "dns_app_lb" {
 output "reoute53_record" {
   value = module.route53.reoute53_record
 }
+
+output "app_lb" {
+  value = module.alb.app_lb
+}
