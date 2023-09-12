@@ -25,3 +25,5 @@ app_service = {
     }
   }
 }
+
+record_domain = "api.falcodev.online"

@@ -47,12 +47,12 @@ variable "app_service" {
   })
 }
 
-variable "host_zone" {
-  type        = string
-  description = "Host zone Route 53"
+variable "host_zone_id" {
+  type    = string
+  default = "Z093024522NNUB959GH4"
 }
 
-variable "record_api" {
+variable "record_domain" {
   type        = string
   description = "Route 53 record"
 }

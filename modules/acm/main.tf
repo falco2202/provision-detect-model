@@ -10,14 +10,14 @@ resource "aws_acm_certificate" "falcodev_cert" {
 resource "aws_route53_record" "falcodev" {
   name    = tolist(aws_acm_certificate.falcodev_cert.domain_validation_options)[0].resource_record_name
   type    = "CNAME"
-  zone_id = var.zone_id
+  zone_id = var.host_zone_id
   records = ["${tolist(aws_acm_certificate.falcodev_cert.domain_validation_options)[0].resource_record_value}"]
   ttl     = 300
 }
 
 resource "aws_route53_record" "cert_validation_records" {
   allow_overwrite = true
-  zone_id         = var.zone_id
+  zone_id         = var.host_zone_id
   ttl             = 60
 
   for_each = {
