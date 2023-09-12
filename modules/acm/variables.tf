@@ -1,4 +1,4 @@
-variable "zone_id" {
+variable "host_zone_id" {
   type = string
 }
 
