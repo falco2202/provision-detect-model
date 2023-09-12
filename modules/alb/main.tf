@@ -20,12 +20,18 @@ resource "aws_alb_target_group" "alb_target_group" {
   }
 
   depends_on = [aws_lb.app_lb]
+
+  lifecycle {
+    create_before_destroy = true
+  }
 }
 
 resource "aws_alb_listener" "alb_listener" {
   load_balancer_arn = aws_lb.app_lb[0].id
-  port              = 80
-  protocol          = "HTTP"
+  port              = 443
+  protocol          = "HTTPS"
+
+  certificate_arn = var.certificate_arn
 
   default_action {
     type             = "forward"

@@ -28,5 +28,14 @@ output "target_group_arn" {
 }
 
 output "dns_app_lb" {
-  value = module.alb.app_lb[0].dns_name
+  value = module.alb.app_lb.dns_name
+}
+
+output "reoute53_record" {
+  value = module.route53.reoute53_record
+}
+
+output "certificate" {
+  value     = module.acm.certificate
+  sensitive = true
 }

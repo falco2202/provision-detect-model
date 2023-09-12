@@ -46,3 +46,13 @@ variable "app_service" {
     })
   })
 }
+
+variable "host_zone" {
+  type        = string
+  description = "Host zone Route 53"
+}
+
+variable "record_api" {
+  type        = string
+  description = "Route 53 record"
+}

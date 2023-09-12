@@ -25,3 +25,6 @@ app_service = {
     }
   }
 }
+
+host_zone  = "falcodev.online"
+record_api = "api-dev.falcodev.online"
