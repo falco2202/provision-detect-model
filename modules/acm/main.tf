@@ -1,5 +1,5 @@
 resource "aws_acm_certificate" "falcodev_cert" {
-  domain_name       = "api-dev.falcodev.online"
+  domain_name       = var.domain_name
   validation_method = "DNS"
 
   lifecycle {

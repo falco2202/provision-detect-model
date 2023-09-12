@@ -17,8 +17,9 @@ module "networking" {
 }
 
 module "acm" {
-  source  = "../../modules/acm"
-  zone_id = module.route53.zone_id
+  source      = "../../modules/acm"
+  zone_id     = module.route53.zone_id
+  domain_name = var.record_api
 }
 
 module "alb" {
@@ -32,8 +33,10 @@ module "alb" {
 }
 
 module "route53" {
-  source = "../../modules/route53"
-  app_lb = module.alb.app_lb
+  source     = "../../modules/route53"
+  app_lb     = module.alb.app_lb
+  host_zone  = var.host_zone
+  record_api = var.record_api
 }
 
 module "ecs" {

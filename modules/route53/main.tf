@@ -1,10 +1,10 @@
 resource "aws_route53_zone" "falcodev" {
-  name = "falcodev.online"
+  name = var.host_zone
 }
 
 resource "aws_route53_record" "alias_falcodev" {
   zone_id = aws_route53_zone.falcodev.zone_id
-  name    = "api-dev.falcodev.online"
+  name    = var.record_api
   type    = "A"
 
   alias {
