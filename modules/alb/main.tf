@@ -9,19 +9,18 @@ resource "aws_lb" "app_lb" {
 
 resource "aws_alb_target_group" "alb_target_group" {
   name        = "${var.app_name}-${var.env}-tg"
-  port        = 443
-  protocol    = "HTTPS"
+  port        = 80
+  protocol    = "HTTP"
   vpc_id      = var.vpc_id
   target_type = "ip"
 
   health_check {
-    protocol = "HTTPS"
+    protocol = "HTTP"
     path     = "/"
   }
 
   depends_on = [aws_lb.app_lb]
 
-  overwrite = true
   lifecycle {
     create_before_destroy = true
   }
