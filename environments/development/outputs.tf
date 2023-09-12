@@ -36,5 +36,5 @@ output "dns_app_lb" {
 # }
 
 output "app_lb" {
-  value = module.alb.app_lb
+  value = module.alb.app_lb[0]
 }

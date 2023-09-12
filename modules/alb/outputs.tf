@@ -3,5 +3,5 @@ output "target_group_arn" {
 }
 
 output "app_lb" {
-  value = aws_alb_target_group.alb_target_group
+  value = aws_lb.app_lb
 }
