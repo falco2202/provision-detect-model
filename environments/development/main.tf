@@ -25,6 +25,11 @@ module "alb" {
   env                 = var.env
 }
 
+module "route53" {
+  source = "../../modules/route53"
+  aws_lb = module.alb.app_lb
+}
+
 module "ecs" {
   source              = "../../modules/ecs"
   depends_on          = [module.networking]
