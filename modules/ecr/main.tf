@@ -18,3 +18,9 @@ resource "null_resource" "detect_repo" {
     EOF
   }
 }
+
+data "aws_ecr_image" "detect_repo" {
+  depends_on      = [null_resource.detect_repo]
+  repository_name = var.name_repo
+  image_tag       = "latest"
+}

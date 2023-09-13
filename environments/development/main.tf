@@ -51,6 +51,7 @@ module "ecs" {
   depends_on          = [module.networking, module.ecr]
   account_id          = local.account_id
   ecr_repository      = module.ecr.repository_url
+  ecr_repository_id   = module.ecr.repository_url_id
   app_name            = var.app_name
   region              = var.region
   app_service         = var.app_service
