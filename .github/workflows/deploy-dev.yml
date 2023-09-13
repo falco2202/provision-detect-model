@@ -32,7 +32,7 @@ jobs:
 
       - name: Plan
         working-directory: environments/development
-        run: terraform plan -var-file="terraform.tfvars"
+        run: terraform plan -var-file="terraform.tfvars" -var="access_id=${{ secrets.AWS_ACCESS_KEY_ID }}" -var="access_key=${{ secrets.AWS_SECRET_ACCESS_KEY }}"
 
   apply:
     needs: plan
