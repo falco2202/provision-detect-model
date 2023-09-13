@@ -16,6 +16,13 @@ module "networking" {
   public_subnets_cidr_block = var.public_subnets_cidr_block
 }
 
+module "ecr" {
+  source     = "../../modules/ecr"
+  account_id = local.account_id
+  region     = var.region
+  name_repo  = var.name_repo
+}
+
 module "acm" {
   source       = "../../modules/acm"
   host_zone_id = var.host_zone_id
@@ -41,8 +48,9 @@ module "route53" {
 
 module "ecs" {
   source              = "../../modules/ecs"
-  depends_on          = [module.networking]
+  depends_on          = [module.networking, module.ecr]
   account_id          = local.account_id
+  ecr_repository      = module.ecr.repository_url
   app_name            = var.app_name
   region              = var.region
   app_service         = var.app_service

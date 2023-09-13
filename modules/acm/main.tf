@@ -18,7 +18,7 @@ resource "aws_route53_record" "falcodev" {
 resource "aws_route53_record" "cert_validation_records" {
   allow_overwrite = true
   zone_id         = var.host_zone_id
-  ttl             = 60
+  ttl             = 300
 
   for_each = {
     for dvo in aws_acm_certificate.falcodev_cert.domain_validation_options : dvo.domain_name => {
