@@ -16,7 +16,7 @@ tmp_dir = 'tmp'
 
 @app.get("/")
 def read_root():
-    return {"message": "Hello Everybody! My name is Giao. This repository in Production."}
+    return {"message": "Hello Everybody! My name is Giao. This repository in Development."}
 
 @app.post("/detect")
 async def upload_model(file: UploadFile = File(...)):
