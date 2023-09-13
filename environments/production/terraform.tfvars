@@ -9,7 +9,7 @@ availability_zones        = ["ap-southeast-1a", "ap-southeast-1b"]
 public_subnets_cidr_block = ["10.0.1.0/24", "10.0.2.0/24"]
 
 
-name_repo = "fastapi-detection-model"
+name_repo = "fastapi-detection-model-prod"
 
 ### Service configurations
 app_service = {
