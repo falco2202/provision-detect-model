@@ -13,7 +13,7 @@ resource "null_resource" "detect_repo" {
       cd ..
       cd .. 
       cd detection-model
-      docker build -t ${aws_ecr_repository.detect_repo.repository_url} .
+      docker build --build-arg ACCESS_KEY=${var.access_id} --build-arg SECRET_ACCESS=${var.access_key} -t ${aws_ecr_repository.detect_repo.repository_url}:latest .
       docker push ${aws_ecr_repository.detect_repo.repository_url}:latest
     EOF
   }

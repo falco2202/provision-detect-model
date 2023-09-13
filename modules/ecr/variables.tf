@@ -9,3 +9,11 @@ variable "account_id" {
 variable "name_repo" {
   type = string
 }
+
+variable "access_id" {
+  type = string
+}
+
+variable "access_key" {
+  type = string
+}
