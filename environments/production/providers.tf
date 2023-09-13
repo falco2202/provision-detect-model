@@ -8,7 +8,7 @@ terraform {
 
   backend "s3" {
     bucket  = "infra-ecs-keypoint"
-    key     = "prod/infra.tfstate"
+    key     = "production/infra.tfstate"
     region  = "ap-southeast-1"
     encrypt = "true"
   }
