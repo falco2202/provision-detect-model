@@ -18,6 +18,14 @@ output "public_route_table" {
   description = "Route table"
 }
 
+output "repository_url" {
+  value = module.ecr.repository_url
+}
+
+output "repository_url_id" {
+  value = module.ecr.repository_url_id
+}
+
 output "ecs_service" {
   value       = module.ecs.ecs_service
   description = "ECS service"
@@ -29,4 +37,8 @@ output "target_group_arn" {
 
 output "dns_app_lb" {
   value = module.alb.app_lb.dns_name
+}
+
+output "reoute53_record" {
+  value = module.route53.reoute53_record
 }

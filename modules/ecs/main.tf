@@ -17,7 +17,7 @@ resource "aws_ecs_task_definition" "task_definition" {
   container_definitions = jsonencode([
     {
       name      = var.app_service.name
-      image     = "${var.account_id}.dkr.ecr.${var.region}.amazonaws.com/${var.app_name}:latest"
+      image     = "${var.ecr_repository}@${var.ecr_repository_id}"
       essential = true
       portMappings = [
         {

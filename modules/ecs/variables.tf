@@ -19,6 +19,14 @@ variable "region" {
   type = string
 }
 
+variable "ecr_repository" {
+  type = string
+}
+
+variable "ecr_repository_id" {
+  type = string
+}
+
 variable "app_name" {
   type = string
 }

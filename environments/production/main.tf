@@ -8,13 +8,19 @@ locals {
   account_id = data.aws_caller_identity.current.account_id
 }
 
-
 module "networking" {
   source                    = "../../modules/networking"
   name                      = "VPC"
   availability_zones        = var.availability_zones
   vpc_cidr_block            = var.vpc_cidr_block
   public_subnets_cidr_block = var.public_subnets_cidr_block
+}
+
+module "ecr" {
+  source     = "../../modules/ecr"
+  account_id = local.account_id
+  region     = var.region
+  name_repo  = var.name_repo
 }
 
 module "acm" {
@@ -39,10 +45,13 @@ module "route53" {
   host_zone_id  = var.host_zone_id
   record_domain = var.record_domain
 }
+
 module "ecs" {
   source              = "../../modules/ecs"
-  depends_on          = [module.networking]
+  depends_on          = [module.networking, module.ecr]
   account_id          = local.account_id
+  ecr_repository      = module.ecr.repository_url
+  ecr_repository_id   = module.ecr.repository_url_id
   app_name            = var.app_name
   region              = var.region
   app_service         = var.app_service

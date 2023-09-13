@@ -56,3 +56,8 @@ variable "record_domain" {
   type        = string
   description = "Route 53 record"
 }
+
+variable "name_repo" {
+  type        = string
+  description = "Name repository ECR"
+}
