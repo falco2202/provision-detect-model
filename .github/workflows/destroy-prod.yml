@@ -23,4 +23,4 @@ jobs:
 
       - name: Terraform destroy
         working-directory: environments/production
-        run: terraform destroy -auto-approve
+        run: terraform destroy -var="access_id=${{ secrets.AWS_ACCESS_KEY_ID }}" -var="access_key=${{ secrets.AWS_SECRET_ACCESS_KEY }}" -auto-approve
