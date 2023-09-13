@@ -61,3 +61,11 @@ variable "name_repo" {
   type        = string
   description = "Name repository ECR"
 }
+
+variable "access_id" {
+  type = string
+}
+
+variable "access_key" {
+  type = string
+}

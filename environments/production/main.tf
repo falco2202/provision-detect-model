@@ -21,6 +21,8 @@ module "ecr" {
   account_id = local.account_id
   region     = var.region
   name_repo  = var.name_repo
+  access_id  = var.access_id
+  access_key = var.access_key
 }
 
 module "acm" {

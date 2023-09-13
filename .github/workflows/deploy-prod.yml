@@ -32,7 +32,10 @@ jobs:
 
       - name: Plan
         working-directory: environments/production
-        run: terraform plan -var-file="terraform.tfvars"
+        env:
+          ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+        run: terraform plan --var-file="terraform.tfvars" -var="access_id=$ACCESS_KEY_ID" -var="access_key=$SECRET_ACCESS_KEY"
 
   apply:
     needs: plan
@@ -51,6 +54,9 @@ jobs:
 
       - name: Apply
         working-directory: environments/production
+        env:
+          ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
         run: |
           terraform init
-          terraform apply -var-file="terraform.tfvars" -auto-approve
+          terraform apply -var-file="terraform.tfvars" -var="access_id="$ACCESS_KEY_ID"" -var="access_key="$SECRET_ACCESS_KEY"" -auto-approve
