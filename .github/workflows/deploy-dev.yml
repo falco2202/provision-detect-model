@@ -59,4 +59,4 @@ jobs:
           SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
         run: |
           terraform init
-          terraform apply -var-file="terraform.tfvars" -var="access_id=$ACCESS_KEY_ID" -var="access_key=$SECRET_ACCESS_KEY" -auto-approve
+          terraform apply -var-file="terraform.tfvars" -var="access_id="$ACCESS_KEY_ID"" -var="access_key="$SECRET_ACCESS_KEY"" -auto-approve
