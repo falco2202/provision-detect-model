@@ -2,6 +2,16 @@
 
 ## Infrastructure
 
-![image](https://github.com/falco2202/ecs_infrastructure/assets/82159331/dee33e92-468c-45cf-a0ac-a4d437e71307)
+![image](https://github.com/falco2202/ecs_infrastructure/assets/82159331/cd7fc5e4-eea5-4115-a83e-64c7fac16ebc)
 
-- Note: To save cost and reduce the complexity of the problem, I let the container run in the public subnet (Best way still let container in private subnet).
+- Note: To reduce complexity and cost, I ran the container in the public subnet. (It is still best practice to keep container in the private subnet).
+
+## Folder structure 
+```
+// TODO
+```
+
+## Usage repository
+```
+// TODO
+```
