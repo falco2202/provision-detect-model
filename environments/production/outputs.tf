@@ -18,6 +18,9 @@ output "public_route_table" {
   description = "Route table"
 }
 
+output "repository_url" {
+  value = module.ecr.repository_url
+}
 output "ecs_service" {
   value       = module.ecs.ecs_service
   description = "ECS service"

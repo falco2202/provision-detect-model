@@ -16,7 +16,7 @@ tmp_dir = 'tmp'
 
 @app.get("/")
 def read_root():
-    return {"message": "Hello World"}
+    return {"message": "Hello Everyone"}
 
 @app.post("/detect")
 async def upload_model(file: UploadFile = File(...)):
