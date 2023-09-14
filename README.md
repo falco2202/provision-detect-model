@@ -53,7 +53,8 @@ git clone https://github.com/falco2202/provision-detect-model.git
 
 ## Load test
 * Note: Application is tested for performance with ECS Fargate(task: 1 vCPU, 2GB Memory) and autoscaling (min: 2, max: 5)
+* 
 ![image](https://github.com/falco2202/provision-detect-model/assets/82159331/dae6f5ab-5a68-4c19-97a7-7f0a4c4a8a30)
 
--> The server died with the 15 users and 13 requests/senconds
+-> The server died with the 15 users and 13 requests/second
 
