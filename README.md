@@ -13,34 +13,33 @@
 |   ├── app
 |   |      ├── __init__.py
 |   |      ├── app.py
-|   |      ├── yolov8n-pose.py             # Model pose detect image
+|   |      └── yolov8n-pose.py             # Model pose detect image
 |   ├── Dockerfile
-|   ├── requirements.txt          
+|   └── requirements.txt          
 ├── environment
 |       ├── development                    # Infrastructure Dev environment
 |       |      ├── main.tf
 |       |      ├── variables.tf
 |       |      ├── terraform.tfvars
-|       |      ├── ...
+|       |      └── ...
 |       ├── production                     # Infrastructure Production environment     
 |       |      ├── main.tf
 |       |      ├── variables.tf
 |       |      ├── terraform.tfvars
-|       |      ├── ...             
+|       |      └── ...             
 ├── module
 |   ├── acm
 |   |    ├── main.tf
 |   |    ├── variables.tf
-|   |    ├── outputs.tf
+|   |    └── outputs.tf
 |   ├── alb
 |   ├── ecr
 |   ├── ecs
 |   ├── networking
-|   ├── route53                 
+|   └── route53                 
 ├── .gitignore                   
 ├── LICENSE.md
 └── README.md
-
 ```
 
 ## Usage repository
